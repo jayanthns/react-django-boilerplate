@@ -1,0 +1,31 @@
+{
+  "name": "frontend_app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "react-scripts": "1.1.4",
+    "copyfiles": "^2.0.0",
+    "renamer": "^0.7.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "collect": "react-scripts build && yarn build-rename && yarn copy-buildfiles && yarn collectstatic",
+    //"build-rename": "yarn build-rename-js && yarn build-rename-css && yarn build-rename-logo",
+    "build-rename": "yarn build-rename-js && yarn build-rename-css",
+    //"build-rename-logo": "renamer --regex --find '([^\\.])\\.[^\\.]+\\.(\\w+)' --replace '$1.$2' build/static/media/*",
+    "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js' --replace 'react-django.ui.js' build/static/js/*.js",
+    "build-rename-css": "renamer --regex --find 'main\\.[^\\.]+\\.css' --replace 'react-django.ui.css' build/static/css/*.css",
+    "copy-buildfiles": "yarn copy-build-js && yarn copy-build-css && yarn copy-build-logo",
+    "copy-build-logo": "copyfiles -f 'build/static/media/*' '../backend_app/staticfiles/media/'",
+    "copy-build-js": "copyfiles -f 'build/static/js/*.js' '../backend_app/staticfiles/js/'",
+    "copy-build-css": "copyfiles -f 'build/static/css/*.css' '../backend_app/staticfiles/css/'",
+    "collectstatic": "python ../backend_app/manage.py collectstatic --no-input"
+  }
+}
